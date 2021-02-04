@@ -21,3 +21,7 @@
 ## Execution
 
 > sbt run
+ 
+## The process
+
+[![CodeKata: To-do REST API (how-to create a REST API)](https://img.youtube.com/vi/SNBEKxsTI_k/hqdefault.jpg)](https://youtu.be/SNBEKxsTI_k "Click to watch - CodeKata: To-do REST API (how-to create a REST API)")
