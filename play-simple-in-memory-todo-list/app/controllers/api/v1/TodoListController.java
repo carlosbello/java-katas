@@ -9,15 +9,14 @@ import play.mvc.Http.Request;
 import play.mvc.Result;
 import play.mvc.Results;
 import repositories.TodoRepository;
-import repositories.TodoRepositoryProvider;
 
 public class TodoListController extends Controller {
 
 	private final TodoRepository todoRepository;
 
 	@Inject
-	public TodoListController(TodoRepositoryProvider todoRepositoryProvider) {
-		this.todoRepository = todoRepositoryProvider.get();
+	public TodoListController(TodoRepository todoRepository) {
+		this.todoRepository = todoRepository;
 	}
 
 	public Result getAll() {
@@ -32,7 +31,7 @@ public class TodoListController extends Controller {
 		var newTodoItem = Json.fromJson(request.body().asJson(), TodoItem.class);
 		try {
 			return ok(Json.toJson(todoRepository.add(newTodoItem)));
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			return Results.badRequest(e.getMessage());
 		}
 	}
@@ -46,7 +45,7 @@ public class TodoListController extends Controller {
 		todoItem.setId(id);
 		try {
 			return ok(Json.toJson(todoRepository.update(todoItem)));
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			return Results.badRequest(e.getMessage());
 		}
 	}

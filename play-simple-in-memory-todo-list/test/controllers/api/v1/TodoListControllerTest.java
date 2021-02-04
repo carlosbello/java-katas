@@ -18,6 +18,7 @@ import play.test.WithApplication;
 import repositories.TodoRepository;
 
 import static org.junit.Assert.assertEquals;
+import static play.inject.Bindings.bind;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.DELETE;
 import static play.test.Helpers.GET;
@@ -39,7 +40,7 @@ public class TodoListControllerTest extends WithApplication {
 		setTitle("item3");
 	}};
 
-	private final TodoRepository repository = TodoRepository.getInstance();
+	private final TodoRepository repository = new TodoRepository();
 
 	@Before
 	public void setUp() throws Exception {
@@ -55,7 +56,9 @@ public class TodoListControllerTest extends WithApplication {
 
 	@Override
 	protected Application provideApplication() {
-		return new GuiceApplicationBuilder().build();
+		return new GuiceApplicationBuilder()
+				.overrides(bind(TodoRepository.class).toInstance(repository))
+				.build();
 	}
 
 	@Test

@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class TodoRepositoryTest {
-	private final TodoRepository repository = TodoRepository.getInstance();
+	private final TodoRepository repository = new TodoRepository();
 
 	@After
 	public void cleanUp() {
@@ -25,7 +25,7 @@ public class TodoRepositoryTest {
 	}
 
 	@Test
-	public void getAllReturnsEmptyListWhenAllElementHasBeenDeleted() throws Exception {
+	public void getAllReturnsEmptyListWhenAllElementHasBeenDeleted() throws IllegalArgumentException {
 		repository.add(new TodoItem() {{
 			setId("id1");
 		}});
@@ -39,7 +39,7 @@ public class TodoRepositoryTest {
 	}
 
 	@Test
-	public void getReturnsExistingElement() throws Exception {
+	public void getReturnsExistingElement() throws IllegalArgumentException {
 		var todoItem = new TodoItem() {{
 			setId("id1");
 		}};
@@ -48,8 +48,8 @@ public class TodoRepositoryTest {
 		assertEquals(repository.get("id1"), todoItem);
 	}
 
-	@Test(expected = Exception.class)
-	public void addThowsExceptionIfNewElementIdExistsInTheRepository() throws Exception {
+	@Test(expected = IllegalArgumentException.class)
+	public void addThowsExceptionIfNewElementIdExistsInTheRepository() throws IllegalArgumentException {
 		TodoItem newTodoItem = new TodoItem() {{
 			setId("id1");
 		}};
@@ -59,7 +59,7 @@ public class TodoRepositoryTest {
 	}
 
 	@Test
-	public void add() throws Exception {
+	public void add() throws IllegalArgumentException {
 		TodoItem newTodoItem = new TodoItem() {{
 			setId("id1");
 		}};
@@ -72,7 +72,7 @@ public class TodoRepositoryTest {
 	}
 
 	@Test
-	public void delete() throws Exception {
+	public void delete() throws IllegalArgumentException {
 		repository.add(new TodoItem() {{
 			setId("id1");
 		}});
@@ -84,15 +84,15 @@ public class TodoRepositoryTest {
 		assertNull(repository.get("id1"));
 	}
 
-	@Test(expected = Exception.class)
-	public void updateThrowsExceptionWhenElementToUpdateDoesNotExist() throws Exception {
+	@Test(expected = IllegalArgumentException.class)
+	public void updateThrowsExceptionWhenElementToUpdateDoesNotExist() throws IllegalArgumentException {
 		repository.update(new TodoItem() {{
 			setId("non-existing-element");
 		}});
 	}
 
 	@Test
-	public void updateChangeExistingElement() throws Exception {
+	public void updateChangeExistingElement() throws IllegalArgumentException {
 		var originalTodoItem = new TodoItem() {{
 			setId("id1");
 			setTitle("Original title");

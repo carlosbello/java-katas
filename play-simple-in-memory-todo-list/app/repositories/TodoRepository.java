@@ -5,25 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import javax.inject.Singleton;
 
 import models.TodoItem;
 
 import com.google.common.base.Strings;
 
+@Singleton
 public class TodoRepository {
-	private static TodoRepository instance;
-
 	private final Map<String, TodoItem> todoList = new HashMap<>();
-
-	private TodoRepository() {
-	}
-
-	public static TodoRepository getInstance() {
-		if (instance == null) {
-			instance = new TodoRepository();
-		}
-		return instance;
-	}
 
 	public List<TodoItem> getAll() {
 		return new ArrayList<>(todoList.values());
@@ -33,9 +23,9 @@ public class TodoRepository {
 		return todoList.get(id);
 	}
 
-	public TodoItem add(TodoItem todoItem) throws Exception {
+	public TodoItem add(TodoItem todoItem) throws IllegalArgumentException {
 		if (todoList.containsKey(todoItem.getId())) {
-			throw new Exception(String.format("A task with id: %s already exists", todoItem.getId()));
+			throw new IllegalArgumentException(String.format("A task with id: %s already exists", todoItem.getId()));
 		}
 		if (Strings.isNullOrEmpty(todoItem.getId())) {
 			todoItem.setId(UUID.randomUUID().toString());
@@ -48,9 +38,9 @@ public class TodoRepository {
 		return todoList.remove(id);
 	}
 
-	public TodoItem update(TodoItem todoItem) throws Exception {
+	public TodoItem update(TodoItem todoItem) throws IllegalArgumentException {
 		if (!todoList.containsKey(todoItem.getId())) {
-			throw new Exception(String.format("No task with id: %s exists.", todoItem.getId()));
+			throw new IllegalArgumentException(String.format("No task with id: %s exists.", todoItem.getId()));
 		}
 		todoList.put(todoItem.getId(), todoItem);
 		return todoItem;
