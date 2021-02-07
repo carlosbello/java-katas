@@ -10,6 +10,10 @@
 | done | Boolean |
 | creationDate | Date |
 
+### Persistence
+
+Save the to-do list in a json file.
+
 ### Actions
 
 * Add new
@@ -20,11 +24,15 @@
 
 ## Cache
 
-* Read operations must be cached
-* Invalidate cache for get all operations when new todo item is added
-* Invalidate cache for get item operations when the item is updated
-* Do not invalidate any read cache on delete
+* "Read" operations must be cached
+* Invalidate cache for a "get all" operations when a new todo item is added
+* Invalidate cache for a "get item" operations when the item is updated
+* Do not invalidate any read cache on "delete" operations
 
 ## Execution
 
 > sbt run
+
+# The process
+
+[![CodeKata: Cached To-do REST API (how-to create a REST API)](https://img.youtube.com/vi/qRP32ktO7K4/hqdefault.jpg)](https://youtu.be/qRP32ktO7K4 "Click to watch - CodeKata: Cached To-do REST API (how-to create a REST API)")
