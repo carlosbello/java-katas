@@ -1,0 +1,5 @@
+GET    /        controllers.api.v1.TodoListController.getAll()
+GET    /:id     controllers.api.v1.TodoListController.get(id)
+POST   /        controllers.api.v1.TodoListController.add(request: Request)
+PUT    /:id     controllers.api.v1.TodoListController.update(id, request: Request)
+DELETE /:id     controllers.api.v1.TodoListController.delete(id)
